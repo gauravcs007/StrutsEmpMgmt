@@ -36,6 +36,10 @@
           <action name="SignUp" class="com.exavalu.models.User" method="doSignUp">
             <result name="SUCCESS">login.jsp</result>
             <result name="FAILURE">signup.jsp</result>
-        </action>      
+        </action> 
+        <action name="PreSignUp" class="com.exavalu.models.User" method="doPreSignUp">
+            <result name="SUCCESS">signup.jsp</result>
+            <result name="FAILURE">login.jsp</result>
+        </action>     
     </package>
 </struts>

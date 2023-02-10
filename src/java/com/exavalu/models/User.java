@@ -27,6 +27,10 @@ public class User extends ActionSupport implements ApplicationAware, SessionAwar
    
     private String firstName;
     private String lastName;
+    private String countryCode;
+    private String stateCode;
+    private String distCode;
+    
     private SessionMap<String, Object> sessionMap = (SessionMap) ActionContext.getContext().getSession();
 
     private ApplicationMap map = (ApplicationMap) ActionContext.getContext().getApplication();
@@ -60,7 +64,39 @@ public class User extends ActionSupport implements ApplicationAware, SessionAwar
 
         return result;
     }
-
+    
+     public String doPreSignUp() throws Exception {
+        String result = "SUCCESS";
+        ArrayList countryList = UserService.getAllCountries();
+        sessionMap.put("countryList",countryList);
+         System.err.println("country code : "+this.countryCode);
+        if(this.countryCode!=null)
+        {
+             ArrayList stateList = UserService.getAllStates(this.countryCode);
+             sessionMap.put("stateList",stateList);
+             sessionMap.put("User",this);
+        }
+        System.err.println("stateCode code : "+this.stateCode);
+         System.err.println("stateCode code : "+this.distCode);
+        
+         if(this.countryCode!=null && this.stateCode!=null)
+        {
+           ArrayList  distList = UserService.getAllDistricts(this.stateCode);
+             sessionMap.put("distList",distList);
+             sessionMap.put("User",this);
+              
+        
+        }
+         
+       
+//         
+//          if (this.firstName != null && this.firstName.length()>0 && this.lastName != null && this.lastName.length()>0 && this.email != null && this.email.length()>0 && this.password!= null && this.password.length()>0 && this.stateCode != "0" && this.countryCode != "0" && this.distCode != "0"){
+//              UserService.getInstance().doSignUp(this);
+//              result = "FAILURE";
+//          }
+        
+        return result;
+    }
     public String doLogout() {
         String result = "SUCCESS";
         sessionMap.clear();
@@ -114,6 +150,30 @@ public class User extends ActionSupport implements ApplicationAware, SessionAwar
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getDistCode() {
+        return distCode;
+    }
+
+    public void setDistCode(String distCode) {
+        this.distCode = distCode;
     }
 
 }
